@@ -76,5 +76,6 @@ fabric.properties
 # End of https://www.gitignore.io/api/pycharm+all
 
 data import/products.json
+data import/data_frame.pkl
 
 
