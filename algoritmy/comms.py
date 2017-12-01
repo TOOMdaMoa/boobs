@@ -47,6 +47,7 @@ def create_contexts(df, remove_one_word_contexts = True):
     
     Arguments: 
     df -- dataframe with 2 columns ["context", "word"]
+    remove_one_word_contexts -- do I keep or remove one word contexts
     
     Return:
     word_bags -- list of lists of words belonging to context in context_ids
@@ -123,6 +124,12 @@ def generate_batch(batch_size, genbatch_prereq, alg_variant = "A"):
     Arguments:
     batch_size -- size of batch
     genbatch_prereq -- result of create_genbatch_prerequisities
+    alg_variant -- variant of algorithm for generating batch
+                   A - sample uniformly from all (word,context word) pairs
+                       in this case words in longer contexts have 
+                       higher chance of sampling 
+                   B - TODO - select random word from text corpus 
+                       and select randomly word from its context
     
     Return:
     batch -- words np.array(int), shape = (batch_size, )
