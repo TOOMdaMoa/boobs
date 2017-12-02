@@ -2,6 +2,7 @@ import csv
 import psycopg2
 import time
 from config import config
+import pandas as pd
 
 
 def get_csv_data(input_filename) -> [[str]]:
@@ -57,6 +58,8 @@ def fill_table(table_name):
     header = data[0]
     data = data[1:]
 
+
+
     # replace '' with NULL
     for row in range(0, len(data)):
         for value in range(0, len(data[row])):
@@ -93,8 +96,13 @@ def fill_table(table_name):
             conn.close()
 
 if __name__ == '__main__':
+    # data = pd.read_pickle("./data import/data_frame.pkl")
+    df = pd.read_pickle('./data import/data_frame.pkl')
+    df['date'] = pd.to_datetime(df['date'])
+    df.to_csv('data_datetime.csv')
+
     inspection_processing_start = time.time()
-    fill_table("user_views")
+    # fill_table("user_views")
     processing_duration_seconds = int(time.time() - inspection_processing_start)
     print("Trvalo to {} sekund, tedy {} hodin {} minut {} sekund.".format(processing_duration_seconds,
                                                                           int(processing_duration_seconds / 3600),

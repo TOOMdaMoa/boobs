@@ -7,7 +7,7 @@ CREATE TABLE user_views
   brand_brand_id                                     TEXT,
   brand_title_c                                      TEXT,
   brief_plain_c                                      TEXT,
-  date                                               TIMESTAMP,
+  date                                               TIMESTAMP WITH TIME ZONE,
   index_missing                                      BOOLEAN,
   index_out_of_range                                 BOOLEAN,
   product_id                                         BIGINT                NOT NULL,
