@@ -149,7 +149,7 @@ def generate_batch(batch_size, genbatch_prereq, alg_variant = "A"):
     
     return batch, labels 
     
-def create_w2v_tf_model(batch_size, embedding_size, vocabulary_size, num_sampled): 
+def create_w2v_tf_model(batch_size, embedding_size, vocabulary_size, num_sampled, learn_rate = 1.0): 
     """
     Creates tensorflow model for word2vec 
     
@@ -191,7 +191,7 @@ def create_w2v_tf_model(batch_size, embedding_size, vocabulary_size, num_sampled
                        num_classes=vocabulary_size))
 
     # Construct the SGD optimizer using a learning rate of 1.0.
-    optimizer = tf.train.GradientDescentOptimizer(1.0).minimize(loss)
+    optimizer = tf.train.GradientDescentOptimizer(learn_rate).minimize(loss)
 
     # Add variable initializer.
     init = tf.global_variables_initializer()
