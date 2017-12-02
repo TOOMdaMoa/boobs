@@ -1,0 +1,65 @@
+<center>
+<img src="http://mallgroup.cz/img/logo.svg" width="500">
+</center>
+
+
+<br>
+
+  <div style="margin: 0 auto;width: 1200px; ">
+<div style="display: block; width: 1200px; clear: both">
+<center>
+{% if viewed %}
+<H1 style="font-family: Arial">Historie prohlížení</H1>
+{% endif %}
+
+{% for input_image in viewed %}
+<div style = "display: block; width: 200px; height: 190px; border: 10px solid silver; float: left; backgroud-color: silver; margin: 10px; padding: 10px; padding-bottom: 50px; font-family: Arial">
+ {% if input_image[0] != "" %}
+  <img src="{{ input_image[0] }}" width="200" style= "margin-bottom: 10px;max-height:200px;max-width:200px;height:auto;width:auto;"lazyload/><br>
+  {{ input_image[1] }}
+  {% else %}
+  {{ input_image[1] }}
+  {% endif %}
+</div>
+{% endfor %}
+</center>
+</div>
+</div>
+
+
+
+
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+
+
+
+<center>
+    <div style="margin: 0 auto;width: 1200px; ">
+<div style="display: block; width: 1200px; clear: both; backgroud-color: #ff0000 ">
+  <H1 style="font-family: Arial">Aktuálně doporučované produkty</H1>
+
+{% for excepted_image in excepted %}
+<div style = "display: block; width: 200px; height:190px; border: 10px solid #55dd88 ; float: left; backgroud-color: silver; margin: 10px; padding: 10px; padding-bottom: 50px; font-family: Arial">
+ {% if excepted_image[0] != "" %}
+  <a href="{{ url_for('interactive', ids=ids+","+excepted_image[2]) }}">
+    <img src="{{ excepted_image[0] }}"  style= "margin-bottom: 10px; max-height:200px;max-width:200px;height:auto;width:auto;" lazyload/><br>
+  {{ excepted_image[1] }}
+    </a>
+  {% else %}
+  {{ excepted_image[1] }}
+  {% endif %}
+</div>
+{% endfor %}
+
+</center>
+</div>
+</div>
+</center>

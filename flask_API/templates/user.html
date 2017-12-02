@@ -1,0 +1,64 @@
+<center>
+<img src="http://mallgroup.cz/img/logo.svg" width="500">
+</center>
+
+<br>
+<center>
+  <div style="display: block; float: left; width: 1500px; clear: both">
+<center>
+<div style="display: block; width: 1200px; clear: both">
+
+{% for input_image in viewed %}
+<div style = "display: block; width: 200px; height: 190px; border: 10px solid silver; float: left; backgroud-color: silver; margin: 10px; padding: 10px; padding-bottom: 50px; font-family: Arial">
+ {% if input_image[0] != "" %}
+  <img src="{{ input_image[0] }}" width="200" style= "margin-bottom: 10px;max-height:200px;max-width:200px;height:auto;width:auto;"lazyload/><br>
+  {{ input_image[1] }}
+  {% else %}
+  {{ input_image[1] }}
+  {% endif %}
+</div>
+{% endfor %}
+
+</center>
+
+
+
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+
+
+
+<center>
+<div style="display: block; width: 1200px; clear: both; backgroud-color: #ff0000 ">
+
+{% for excepted_image in excepted %}
+<div style = "display: block; width: 200px; height:190px; border: 10px solid #55dd88 ; float: left; backgroud-color: silver; margin: 10px; padding: 10px; padding-bottom: 50px; font-family: Arial">
+ {% if excepted_image[0] != "" %}
+  <img src="{{ excepted_image[0] }}" width="200" style= "margin-bottom: 10px;max-height:200px;max-width:200px;height:auto;width:auto;" lazyload/><br>
+  {{ excepted_image[1] }}
+  {% else %}
+  {{ excepted_image[1] }}
+  {% endif %}
+</div>
+{% endfor %}
+
+</center>
+</div>
+</center>
+
+<br>
+<br>
+
+<center>
+  <div style="display: block; float: left; width: 100%; clear: both">
+  <a href="{{ url_for('user', id=user, count=previous) }}">previous</a>
+  <a href="{{ url_for('user', id=user, count=next) }}">next</a>
+  </div>
+</center>
