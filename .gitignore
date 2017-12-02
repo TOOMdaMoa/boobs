@@ -77,5 +77,6 @@ fabric.properties
 
 data import/products.json
 data import/data_frame.pkl
+data import/data.csv
 
 
