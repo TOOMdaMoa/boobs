@@ -7,7 +7,7 @@
 The algorithm only works for users who viewed at least one item that someone else viewed. 
 There are few approaches to extend this.
 
-##Other interesting files 
+## Other interesting files 
 
 comms.py -- API for w2v
 
