@@ -40,6 +40,50 @@ def user_item_dataframe(data):
    
     return df
 
+def user_item_time(data): 
+    """
+    Creates pandas DataFrame
+    from load_jsons output
+    
+    Arguments:
+    data -- list of dictionaries with "user_id" and "product_id"
+
+    
+    Return: 
+    df -- pd.Dataframe with columns = ["context", "word", "date"] = ["user_id", "product_id", "date"]
+    """
+    df = pd.DataFrame([{"context": row["user_id"], "word" : row["product_id"], "date" : pd.to_datetime(row["date"])} for row in data])
+    return df
+
+def create_timed_contexts(df, remove_treshold = 1):
+    """
+    Creates list of words with their time in each context for word2vec
+    In our case it creates list of items each user viewed
+    list of dates when this happened and id of the user
+    
+    Arguments:
+    df -- pd.DataFrame, result of user_item_time() 
+    remove_treshold -- remove contexts with only one word 
+                       
+    Return:
+    word_bags -- list of lists, each entry is list of items for one user
+    date_bags -- list of lists, each entry is list of dates when user viewed 
+                 item corresponding to the same position in word_bags
+    context_ids -- list of user ids corresponding to word_bags and date_bags
+    """
+    grouping = df.groupby("context")
+    
+    word_bags = grouping.word.apply(list)
+    date_bags = grouping.date.apply(list)
+    context_ids = word_bags.axes[0]
+    
+    indices_keep = [i for i in range(len(word_bags)) if len(word_bags[i]) > remove_treshold]
+    word_bags = [word_bags[i] for i in indices_keep]
+    date_bags = [date_bags[i] for i in indices_keep]
+    context_ids = [context_ids[i] for i in indices_keep]
+    
+    return word_bags, date_bags, context_ids
+
 
 def create_contexts(df, remove_one_word_contexts = True):
     """
@@ -160,7 +204,15 @@ def create_w2v_tf_model(batch_size, embedding_size, vocabulary_size, num_sampled
     num_sampled -- number of generated negative examples in nce loss
     
     Return: 
-    
+    train_inputs -- contexts placeholder
+    train_labels -- predicted words placeholder
+    embeddings -- embeddings of contexts 
+                  (in our case context is one surrounding word so it really is interchangable)
+    nce_weights -- parameters of model (embeddings of words)
+    nce_biases -- parameters of model (embeddings of words)
+    loss -- nce loss in w2v
+    optimizer -- tf.GradientDescentOptimizer with learn_rate as learning rate
+    init -- tf.global_variables_initializer
     """
     # Input data.
     train_inputs = tf.placeholder(tf.int32, shape=[batch_size])
